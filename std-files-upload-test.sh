@@ -10,10 +10,6 @@
 #upload files and check time elapsed
 #upload checksums for each file to ensure we are dealing with standardised test files
 
-
-#Setup
-echo "Current directory is " `pwd`
-
 DEST_DIR=/tmp/std-file-upload-tests
 
 echo $DEST_DIR
@@ -23,12 +19,9 @@ if [[ -d  $DEST_DIR ]]
 fi
 mkdir $DEST_DIR && cd $DEST_DIR
 
-echo "Current directory is now" `pwd`
-
 #Get the files  calculate checksum and write to SAFE Network
 
-
-#----------------------save on AWS bandwith downloads----comment out the curl line and cop in from local disk
+#----------------------save on AWS bandwith downloads----comment out the curl line and copy in from local disk
 #curl --output dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
 
 cp /tmp/std-file-resources/testfiles/dedup-testfiles.zip  $DEST_DIR/
@@ -49,7 +42,6 @@ for i in 5MB 10MB 20MB 50MB 100MB 200MB
             #extract Files container address
         safe files put md5-$i.txt
 done
-
 
 exit 0
 
