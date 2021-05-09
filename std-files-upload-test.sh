@@ -16,7 +16,7 @@ DELAY=60
 
 
 
-DEST_DIR=/tmp/std-file-upload-tests-04
+DEST_DIR=/tmp/std-file-uploads-test-$(date +%Y%m%d_%H%M%S)
 PATH=$PATH:/home/$USER/.safe/cli         # This should not be needed
 #safe auth restart
 #safe auth create --test-coins
