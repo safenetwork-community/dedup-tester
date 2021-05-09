@@ -20,7 +20,7 @@ DEST_DIR=/tmp/std-file-upload-tests-04
 PATH=$PATH:/home/$USER/.safe/cli         # This should not be needed
 #safe auth restart
 #safe auth create --test-coins
-OPEN_BALANCE=`safe keys balance| safe keys balance|cut -f2 -d':'`
+OPEN_BALANCE=`safe keys balance| safe keys balance|tail -n1|cut -f2 -d':'`
 
 echo "==============================================================="
 echo ""
