@@ -75,9 +75,9 @@ sleep $DELAY
 #---------------------rtreive files-----------------
 
 cat safe-xorurl.txt
-cat safe-xorurl.txt | while read line
+cat safe-xorurl.txt | while read container
 do
-    safe files get safe://$line
+    safe files get safe://$container
 
 done
 
