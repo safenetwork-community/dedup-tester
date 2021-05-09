@@ -62,7 +62,7 @@ for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and 
 done
 
 
-CLOSE_BALANCE=`safe keys balance|cut -f2 -d':'`
+CLOSE_BALANCE=`safe keys balance|tail -n1|cut -f2 -d':'`
 echo ""
 echo "========================================================================================"
 echo ""
