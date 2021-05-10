@@ -15,7 +15,7 @@
 DELAY=60
 
 
-
+mkdir /tmp/std-file-uploads-test
 DEST_DIR=/tmp/std-file-uploads-test/$(date +%Y%m%d_%H%M%S)
 PATH=$PATH:/home/$USER/.safe/cli         # This should not be needed
 #safe auth restart
