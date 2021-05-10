@@ -15,14 +15,19 @@
 DELAY=60
 
 
-mkdir /tmp/std-file-uploads-test
-DEST_DIR=/tmp/std-file-uploads-test/$(date +%Y%m%d_%H%M%S)
+if [[ ! -d /home/$USER/dedup-test-folder ]]
+    then
+    mkdir /home/$USER/dedup-test-folder
+fi
+DEST_DIR=/home/$USER/dedup-test-folder/$(date +%Y%m%d_%H%M%S)
 PATH=$PATH:/home/$USER/.safe/cli         # This should not be needed
 #safe auth restart
 #safe auth create --test-coins
 OPEN_BALANCE=`safe keys balance| safe keys balance|tail -n1|cut -f2 -d':'`
 
 echo "==============================================================="
+echo ""
+echo "the dedup-testfiles.zip will be written in home in dedup-test-folder"
 echo ""
 echo "output files will be written to " $DEST_DIR
 echo ""
@@ -40,12 +45,8 @@ mkdir -p $DEST_DIR && cd $DEST_DIR
 
 #----------------------save on AWS bandwith downloads----comment out the curl line and copy in from local disk
 
-if [[ ! -d /home/$USER/dedup-test-folder ]]
-    then
-    mkdir /home/$USER/dedup-test-folder
-fi
 if [[ ! -e /home/$USER/dedup-test-folder/dedup-testfiles.zip ]]
-    then    
+    then
     curl --output /home/$USER/dedup-test-folder/dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
 fi
 cp /home/$USER/dedup-test-folder/dedup-testfiles.zip  $DEST_DIR/
