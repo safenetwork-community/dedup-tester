@@ -40,19 +40,18 @@ mkdir -p $DEST_DIR && cd $DEST_DIR
 
 #----------------------save on AWS bandwith downloads----comment out the curl line and copy in from local disk
 
-if [[ ! -e /tmp/dedup-testfiles.zip ]]
+if [[ ! -d /home/$USER/dedup-test-folder ]]
     then
-    if [[ ! -d /home/$USER/dedup-test-folder ]]
-        then
-        mkdir /home/$USER/dedup-test-folder
-    fi    
+    mkdir /home/$USER/dedup-test-folder
+fi
+if [[ ! -e /home/$USER/dedup-test-folder/dedup-testfiles.zip ]]
+    then    
     curl --output /home/$USER/dedup-test-folder/dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
-    
 fi
 cp /home/$USER/dedup-test-folder/dedup-testfiles.zip  $DEST_DIR/
 #-----------------------------------------------------------------------
 touch safe-xorurl.txt
-unzip dedup-testfiles.zip >/dev/null
+unzip $DEST_DIR/dedup-testfiles.zip >/dev/null
 
 for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and test
     do
