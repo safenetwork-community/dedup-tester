@@ -13,21 +13,11 @@
 
 #period of time to wait  before attempting to retreive the files
 DELAY=60
-
-
-
-DEST_DIR=/tmp/std-file-uploads-test-$(date +%Y%m%d_%H%M%S)
+DEST_DIR=/home/$USER/tmp/std-file-uploads-test-$(date +%Y%m%d_%H%M%S)
 PATH=$PATH:/home/$USER/.safe/cli         # This should not be needed
-#safe auth restart
-#safe auth create --test-coins
-OPEN_BALANCE=`safe keys balance| safe keys balance|tail -n1|cut -f2 -d':'`
 
-echo "==============================================================="
-echo ""
-echo "output files will be written to " $DEST_DIR
-echo ""
-echo "This account has a balance of "$OPEN_BALANCE
-echo "==============================================================="
+
+
 
 
 if [[ -d  $DEST_DIR ]]
@@ -35,16 +25,29 @@ if [[ -d  $DEST_DIR ]]
     rm -rf $DEST_DIR
 fi
 mkdir -p $DEST_DIR && cd $DEST_DIR
-#pwd
+
+
+clear
+echo "========  SAFE Network testnet Deduplication test  ====================================================="
+echo ""
+echo "          output files will be written to " $DEST_DIR
+echo ""
+
+
+
+
 #Get the files  calculate checksum and write to SAFE Network
 
 #----------------------save on AWS bandwith downloads----comment out the curl line and copy in from local disk
 #curl --output dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
-
 cp /home/$USER/tmp/testfiles/dedup-testfiles.zip  $DEST_DIR/
 #-----------------------------------------------------------------------
 touch safe-xorurl.txt
 unzip dedup-testfiles.zip >/dev/null
+
+OPEN_BALANCE=`safe keys balance| safe keys balance|tail -n1|cut -f2 -d':'`
+echo "This account has a balance of "$OPEN_BALANCE
+echo "==============================================================="
 
 for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and test
     do
@@ -55,9 +58,9 @@ for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and 
         md5sum $i.zip > calculated-md5-$i.txt
         cmp md5-$i.txt  calculated-md5-$i.txt
         (($? != 0)) && { printf '%s\n' "Checksums did not match.  Aborting!!"; exit 1; }
-        #store files to SAFE Network and extract testfiles xorurl address
+        #store files to SAFE Network and extract File Container
         time safe files put $i.zip |  cut -f2 -d'"'  >> safe-xorurl.txt
-        # /home/$USER/.safe/cli/
+        
         safe files put md5-$i.txt >>/dev/null
 done
 
@@ -72,22 +75,28 @@ echo "sleeping for "$DELAY" seconds"
 sleep $DELAY
 
 
-#---------------------rtreive files-----------------
+#---------------------retreive files-----------------
 
 cat safe-xorurl.txt
 cat safe-xorurl.txt | while read container
 do
     safe files get safe://$container
-
+    #TODO: something useful here
 done
 
-echo  "TODO      thanks for using this tool  - more to come"
+echo  "      thanks for using this tool  - more to come"
 echo ""
 echo "That's All, Folks!!"
 
 
 
 exit 0
+
+
+
+
+
+
 
 
 
