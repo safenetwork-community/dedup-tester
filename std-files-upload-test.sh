@@ -42,9 +42,14 @@ mkdir -p $DEST_DIR && cd $DEST_DIR
 
 if [[ ! -e /tmp/dedup-testfiles.zip ]]
     then
-    curl --output dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
+    if [[ ! -d /home/$USER/dedup-test-folder ]]
+        then
+        mkdir /home/$USER/dedup-test-folder
+    fi    
+    curl --output /home/$USER/dedup-test-folder/dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
+    
 fi
-cp /home/$USER/tmp/testfiles/dedup-testfiles.zip  $DEST_DIR/
+cp /home/$USER/dedup-test-folder/dedup-testfiles.zip  $DEST_DIR/
 #-----------------------------------------------------------------------
 touch safe-xorurl.txt
 unzip dedup-testfiles.zip >/dev/null
