@@ -39,8 +39,11 @@ mkdir -p $DEST_DIR && cd $DEST_DIR
 #Get the files  calculate checksum and write to SAFE Network
 
 #----------------------save on AWS bandwith downloads----comment out the curl line and copy in from local disk
-#curl --output dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
 
+if [[ ! -e /tmp/dedup-testfiles.zip ]]
+    then
+    curl --output dedup-testfiles.zip https://maidsafe-t5-dedup-testfiles.s3-eu-west-1.amazonaws.com/dedup-testfiles.zip
+fi
 cp /home/$USER/tmp/testfiles/dedup-testfiles.zip  $DEST_DIR/
 #-----------------------------------------------------------------------
 touch safe-xorurl.txt
