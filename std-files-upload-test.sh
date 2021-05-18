@@ -69,6 +69,8 @@ for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and 
         safe files put md5-$i.txt >>/dev/null
 done
 
+rm dedup-testfiles.zip
+
 
 CLOSE_BALANCE=`safe keys balance|tail -n1|cut -f2 -d':'`
 echo ""
