@@ -52,7 +52,7 @@ fi
 cp /home/$USER/dedup-test-folder/dedup-testfiles.zip  $DEST_DIR/
 #-----------------------------------------------------------------------
 touch safe-xorurl.txt
-unzip $DEST_DIR/dedup-testfiles.zip >/dev/null
+unzip dedup-testfiles.zip >/dev/null
 
 for i in 5MB 10MB #20MB #50MB 100MB 200MB   #commented out for speed up dev and test
     do
